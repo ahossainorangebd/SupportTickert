@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/addTicketId"
+            android:icon="@drawable/add_new_ticket_icon"
+            android:title="Add new Ticket" />
+        <item
+            android:id="@+id/ViewTicketId"
+            android:icon="@drawable/view_tickets_icon"
+            android:title="View All Tickets" />
+        <item
+            android:id="@+id/feedbackid"
+            android:icon="@drawable/feedback_icon"
+            android:title="Feedback" />
+        <item
+            android:id="@+id/logOutId"
+            android:icon="@drawable/logout_icon"
+            android:title="Log Out" />
+    </group>
+
+
+
+    <!--
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+    -->
+
+</menu>
+
+
