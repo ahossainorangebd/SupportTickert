@@ -84,11 +84,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         //catching and getting the text for EditText
 
-        mEdtTxtDomain=findViewById(R.id.domainFieldId);        mStrDomain=mEdtTxtDomain.getText().toString();
-        mEdtTxtUname=findViewById(R.id.nameBoxId);            mStrUname=mEdtTxtUname.getText().toString();
-        mEdtTxtCnumber=findViewById(R.id.contactId);          mStrCnumber=mEdtTxtCnumber.getText().toString();
-        mEdtTxtEmail=findViewById(R.id.email);              mStrEmail=mEdtTxtEmail.getText().toString();
-        mEdtTxtPwd=findViewById(R.id.password);             mStrPwd=mEdtTxtPwd.getText().toString();
+        mEdtTxtDomain=findViewById(R.id.domainFieldId);
+        mEdtTxtUname=findViewById(R.id.nameBoxId);
+        mEdtTxtCnumber=findViewById(R.id.contactId);
+        mEdtTxtEmail=findViewById(R.id.email);
+        mEdtTxtPwd=findViewById(R.id.password);
 
         mSignUpButton= findViewById(R.id.regiPageSignUpId);
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +97,12 @@ public class SignUpActivity extends AppCompatActivity {
 
                 //TODO: for validation
                 //SetTextValue();
+
+                mStrDomain=mEdtTxtDomain.getText().toString();
+                mStrUname=mEdtTxtUname.getText().toString();
+                mStrCnumber=mEdtTxtCnumber.getText().toString();
+                mStrEmail=mEdtTxtEmail.getText().toString();
+                mStrPwd=mEdtTxtPwd.getText().toString();
 
                 map = new HashMap<String, String>();
 
@@ -108,15 +114,15 @@ public class SignUpActivity extends AppCompatActivity {
                 map.put("user_email",mStrEmail);
                 map.put("user_password",mStrPwd);
 
-                new UploadUserInfo().execute("http://app.support.ae/app_submit/user_registration.php");
+                new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/userRegistration.php");
 
                 Intent i = new Intent(context, LoginActivity.class);
                 v.getContext().startActivity(i);
             }
         });
 
-        /*
 
+        /*
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -132,13 +138,13 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
         */
+
     }
 
     public class UploadUserInfo extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
-
 
             String data= performPostCall(params[0],map);
 
@@ -160,7 +166,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             String msg=result;
 
-            if (msg.equalsIgnoreCase("success")){
+            if (msg.equalsIgnoreCase("success")) {
 
                 Toast.makeText(getApplicationContext(),"User Information Uploaded Successfully", Toast.LENGTH_LONG).show();
                 /*
@@ -168,7 +174,6 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(i);
                 */
             }
-
 
             //TODO
             //for a Failed attempt activity

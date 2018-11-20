@@ -68,11 +68,11 @@
                 android:layout_height="wrap_content"
                 >
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/domainFieldId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Domain"
+                    android:hint="ডোমেইন"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:layout_marginLeft="8dp"
@@ -111,11 +111,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/nameBoxId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="User Name"
+                    android:hint="ইউজার নেইম"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:layout_marginLeft="8dp"
@@ -128,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/contactId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
