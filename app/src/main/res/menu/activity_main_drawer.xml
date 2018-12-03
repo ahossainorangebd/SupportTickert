@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    >
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        >
 
         <item
             android:id="@+id/addTicketId"
             android:icon="@drawable/add_new_ticket_icon"
-            android:title="Add new Ticket" />
+            android:title="নতুন টিকেট সংযুক্ত করুন" />
         <item
             android:id="@+id/ViewTicketId"
             android:icon="@drawable/view_tickets_icon"
-            android:title="View All Tickets" />
-        <item
+            android:title="সকল টিকেট দেখুন" />
+        <!--<item
             android:id="@+id/feedbackid"
             android:icon="@drawable/feedback_icon"
-            android:title="Feedback" />
+            android:title="Feedback" />-->
         <item
             android:id="@+id/logOutId"
             android:icon="@drawable/logout_icon"
-            android:title="Log Out" />
+            android:title="লগ আউট" />
     </group>
 
 

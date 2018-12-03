@@ -62,8 +62,6 @@
             fab:fab_labelStyle="@style/menu_labels_style"
             fab:fab_title="New Client" />
 
-
-
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
     -->
 

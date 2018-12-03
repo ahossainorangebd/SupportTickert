@@ -1,8 +1,15 @@
 package orangebd.apps.supportticketsystem;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -27,6 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.Manifest.permission.READ_CONTACTS;
+
 public class SignUpActivity extends AppCompatActivity {
 
     //for spinner
@@ -34,6 +44,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     private Button mSignUpButton;
     private Context context;
+
+    private HashMap<String, String> map;
 
     //EditText section
     private EditText mEdtTxtDomain;
@@ -51,7 +63,9 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mEdtTxtPwd;
     private String mStrPwd;
 
-    private HashMap<String, String> map;
+    private static final int REQUEST_READ_CONTACTS = 0;
+
+    private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +73,8 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         context=this;
+
+
 
 
         //Dropdown List
@@ -84,11 +100,15 @@ public class SignUpActivity extends AppCompatActivity {
 
         //catching and getting the text for EditText
 
+        mayRequestContacts();
+
         mEdtTxtDomain=findViewById(R.id.domainFieldId);
         mEdtTxtUname=findViewById(R.id.nameBoxId);
         mEdtTxtCnumber=findViewById(R.id.contactId);
         mEdtTxtEmail=findViewById(R.id.email);
         mEdtTxtPwd=findViewById(R.id.password);
+
+        /*populateAutoComplete();*/
 
         mSignUpButton= findViewById(R.id.regiPageSignUpId);
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
@@ -110,11 +130,12 @@ public class SignUpActivity extends AppCompatActivity {
 
                 map.put("user_domain",mStrDomain);
                 map.put("user_name",mStrUname);
-                map.put("user_contact",mStrCnumber);
+                map.put("user_mobile",mStrCnumber);
                 map.put("user_email",mStrEmail);
                 map.put("user_password",mStrPwd);
 
                 new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/userRegistration.php");
+                //new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/loadUserTickets.php");
 
                 Intent i = new Intent(context, LoginActivity.class);
                 v.getContext().startActivity(i);
@@ -148,6 +169,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             String data= performPostCall(params[0],map);
 
+           // String returnData=data.toString();
             if (data.equalsIgnoreCase("ok"))
                 return "success";
             else
@@ -180,7 +202,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             else {
 
-                Toast.makeText(getApplicationContext(),"Failed to Upload User Information", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Information Uploaded Successfully", Toast.LENGTH_LONG).show();
                 /*
                 Intent i=new Intent(getApplicationContext(),paymentActivity.class);
                 startActivity(i);
@@ -241,7 +263,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         return response;
     }
-
 
     private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
@@ -347,4 +368,51 @@ public class SignUpActivity extends AppCompatActivity {
 
         nullError=false;
     }*/
+
+    /**
+     * Asking request to allow from app.
+     */
+
+    private boolean mayRequestContacts() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+
+            return true;
+        }
+
+        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+
+        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
+            Snackbar.make(mTextView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE).setAction(android.R.string.ok, new View.OnClickListener() {
+
+                        @Override
+                        @TargetApi(Build.VERSION_CODES.M)
+                        public void onClick(View v) {
+
+                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+                        }
+                    });
+        }
+        else {
+
+            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+        }
+        return false;
+    }
+
+
+    /**
+     * Callback received when a permissions request has been completed.
+     */
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_READ_CONTACTS) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                /*populateAutoComplete();*/
+            }
+        }
+    }
 }

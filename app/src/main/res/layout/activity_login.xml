@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".LoginActivity"
-    android:background="#c1c1c1"
+    android:background="#fff"
     >
 
     <!-- Login progress -->
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ticket Support System"
-            android:textColor="@color/design_default_color_primary_dark"
+            android:textColor="#696969"
             android:textSize="@dimen/fab_icon_size"
             android:textAlignment="center"
             android:gravity="center"
@@ -51,7 +51,7 @@
 
     <ScrollView
         android:id="@+id/login_form"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fff"
@@ -61,7 +61,9 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp"
+            >
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -96,13 +98,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/nameBoxId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="User Name"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
+                    android:visibility="gone"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:singleLine="true" />
@@ -113,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/contactId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -129,14 +132,15 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_background"
+                >
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
-                    android:visibility="gone"
+                    android:hint="ই-মেইল"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:inputType="textEmailAddress"
@@ -147,16 +151,20 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/gradient_background"
+                >
 
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="পাসওয়ার্ড"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:imeActionId="6"
+
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
@@ -171,10 +179,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Log In"
+                android:text="প্রবেশ করুন"
                 android:focusable="true"
                 android:textColor="#fff"
-                android:background="#524fa8"
+                android:background="@drawable/gradient_background_silver"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:focusableInTouchMode="true"
@@ -185,6 +193,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="8dp"
                 android:layout_gravity="center"
                 >
 
@@ -200,7 +209,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="or,"/>
+                        android:text="অথবা,"/>
 
                 </LinearLayout>
 
@@ -212,16 +221,27 @@
                     android:orientation="horizontal"
                     >
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="এখানে"/>
+
                     <Button
                         android:id="@+id/signInBtnId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign Up"/>
+                        android:background="#c1c1c1"
+                        android:textColor="#000"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="5dp"
+                        android:text="রেজিস্ট্রেশন"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="from here"/>
+                        android:layout_marginLeft="3dp"
+                        android:text="করুন"/>
+
 
                 </LinearLayout>
 

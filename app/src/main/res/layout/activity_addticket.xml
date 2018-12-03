@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".AddTicketActivity"
-    android:background="#c1c1c1"
+    android:background="#fff"
     >
 
     <!-- Login progress -->
@@ -26,11 +26,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#fff"
-        android:layout_marginTop="50dp"
         >
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="নতুন টিকেট সংযুক্ত করুন"
+            android:textColor="#696969"
+            android:textSize="@dimen/fab_icon_size"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/gradient_background_silver"
+            >
 
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#fff"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
+        >
 
     <ScrollView
         android:id="@+id/login_form"
@@ -46,13 +72,15 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_background"
+                >
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/label3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Subject"
+                    android:hint="বিষয়"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:layout_marginLeft="8dp"
@@ -64,11 +92,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimaryDark"
-                android:layout_marginLeft="6dp"
+                android:background="@drawable/gradient_background_silver"
+                android:layout_marginLeft="2dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="6dp"
-                android:layout_marginRight="6dp"
+                android:layout_marginRight="2dp"
                 >
 
                 <EditText
@@ -77,12 +105,10 @@
                     android:layout_height="100dp"
                     android:inputType="textMultiLine"
                     android:gravity="top"
-                    android:hint="Write your issue here..."
-                    android:layout_marginLeft="1dp"
+                    android:hint="এখানে বিস্তারিত লিখুন..."
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
-                    android:layout_marginRight="1dp"
-                    android:background="#fff"/>
+                    android:background="@drawable/gradient_background"/>
 
             </LinearLayout>
 
@@ -100,6 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Attach file"
+                    android:textStyle="bold"
                     android:textSize="10dp"
                     />
                 <Button
@@ -108,6 +135,7 @@
                     android:layout_height="wrap_content"
                     android:text="Camera"
                     android:textSize="10dp"
+                    android:textStyle="bold"
                     />
 
             </LinearLayout>
@@ -125,9 +153,8 @@
                     android:id="@+id/imagePictureId"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:background="@color/design_default_color_primary"
+                    android:background="@drawable/gradient_background"
                     android:scaleType="fitXY"/>
-
             </FrameLayout>
 
             <Button
@@ -138,9 +165,9 @@
                 android:layout_marginTop="16dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:text="Submit"
+                android:text="সংযুক্ত করুন"
                 android:textColor="#fff"
-                android:background="#524fa8"
+                android:background="@drawable/gradient_background_silver"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="5dp"

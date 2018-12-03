@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,13 +8,485 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        >
 
-</android.support.constraint.ConstraintLayout>
+        <RelativeLayout
+            android:id="@+id/statisticsBtnLayoutId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="7dp"
+                android:gravity="center"
+                >
+
+                <LinearLayout
+                    android:id="@+id/totalDoneTicketBtn1"
+                    android:layout_width="115dp"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient_background"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="২৩৪"
+                        android:layout_gravity="center"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:padding="5dp"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="মোট টিকেট"
+                        android:layout_gravity="center"
+                        android:textColor="#000"
+                        android:textSize="12sp"
+                        android:padding="5dp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/totalDoneTicketBtn2"
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:background="@drawable/gradient_background"
+                    android:layout_marginLeft="7dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="৮৯"
+                        android:layout_gravity="center"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:padding="5dp"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="মোট চলমান"
+                        android:layout_gravity="center"
+                        android:textColor="#000"
+                        android:textSize="12sp"
+                        android:padding="5dp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/totalDoneTicketBtn3"
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient_background"
+                    android:padding="5dp"
+                    android:layout_marginLeft="7dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="৭৬"
+                        android:layout_gravity="center"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:padding="5dp"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="মোট নিষ্পন্ন"
+                        android:layout_gravity="center"
+                        android:textColor="#000"
+                        android:textSize="12sp"
+                        android:padding="5dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/headOfTableId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:background="@drawable/gradient_background"
+            android:layout_below="@+id/statisticsBtnLayoutId"
+            >
+
+            <TextView
+                android:id="@+id/TicketNoId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="10dp"
+                android:text="টিকেট নং"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#686868"
+                />
+
+            <FrameLayout
+                android:layout_width="1dp"
+                android:layout_marginLeft="4.5dp"
+                android:layout_height="match_parent"
+                android:background="#686868"
+                >
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/TicketSubjectId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="22dp"
+                android:text="বিষয়"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#686868"
+                />
+
+            <FrameLayout
+                android:layout_width="1dp"
+                android:layout_marginLeft="90dp"
+                android:layout_height="match_parent"
+                android:background="#686868"
+                >
+
+            </FrameLayout>
+
+            <!--<TextView
+                android:id="@+id/TicketDescriptionId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="35dp"
+                android:text="বর্ণনা"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#686868"
+                />-->
+
+            <!--<FrameLayout
+                android:layout_width="1dp"
+                android:layout_marginLeft="27dp"
+                android:layout_height="match_parent"
+                android:background="#686868"
+                >
+            </FrameLayout>-->
+
+            <TextView
+                android:id="@+id/TicketStatusId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="16dp"
+                android:text="অবস্থা"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#686868"
+                />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/tableHeaderId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#d6d6d6"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_below="@+id/headOfTableId"
+            >
+
+
+
+
+
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/my_recycler_view"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    />
+
+            </ScrollView>
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000"
+                >
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="25dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="22dp"
+                    android:text="1."
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+
+
+                <FrameLayout
+                    android:layout_width="1dp"
+                    android:layout_marginLeft="48dp"
+                    android:layout_height="match_parent"
+                    android:background="#686868"
+                    >
+
+                </FrameLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="404 Error"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+                <FrameLayout
+                    android:layout_width="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="match_parent"
+                    android:background="#686868"
+                    >
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="12dp"
+                    android:text="Not found"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+                <FrameLayout
+                    android:layout_width="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="match_parent"
+                    android:background="#686868"
+                    >
+
+                </FrameLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="15dp"
+                    android:text="Pending"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+            </LinearLayout>-->
+
+
+
+
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="48dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="22dp"
+                    android:text="2."
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+                <FrameLayout
+                    android:layout_width="1dp"
+                    android:layout_marginLeft="48dp"
+                    android:layout_height="match_parent"
+                    android:background="#686868"
+                    >
+
+                </FrameLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="404 Error"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+                <FrameLayout
+                    android:layout_width="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="match_parent"
+                    android:background="#686868"
+                    >
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="12dp"
+                    android:text="Not found"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+                <FrameLayout
+                    android:layout_width="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="match_parent"
+                    android:background="#686868"
+                    >
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="15dp"
+                    android:text="Pending"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+            </LinearLayout>-->
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="70dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="22dp"
+                    android:text="3."
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+
+
+                <FrameLayout
+                    android:layout_width="1dp"
+                    android:layout_marginLeft="48dp"
+                    android:layout_height="match_parent"
+                    android:background="#686868"
+                    >
+
+                </FrameLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="404 Error"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+                <FrameLayout
+                    android:layout_width="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="match_parent"
+                    android:background="#686868"
+                    >
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="12dp"
+                    android:text="Not found"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+                <FrameLayout
+                    android:layout_width="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="match_parent"
+                    android:background="#686868"
+                    >
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="15dp"
+                    android:text="Pending"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    />
+
+            </LinearLayout>-->
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
