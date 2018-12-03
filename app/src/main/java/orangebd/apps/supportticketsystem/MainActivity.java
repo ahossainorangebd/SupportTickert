@@ -28,6 +28,7 @@ import android.content.Context;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -81,6 +82,10 @@ public class MainActivity extends AppCompatActivity
 
     private boolean isRedirectFromLoginAct;
 
+    private TextView userNameTxtView;
+    private TextView userEmailTxtView;
+    private TextView userContactTxtView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -101,6 +106,16 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         isAdminCheck = getIntent().getExtras().getBoolean("isadmin");
+
+        View navView = LayoutInflater.from(context).inflate(R.layout.nav_header_main, null, false);
+
+        userNameTxtView=navView.findViewById(R.id.userNameId);
+        userContactTxtView=navView.findViewById(R.id.textView);
+        userEmailTxtView=navView.findViewById(R.id.contactTextViewId);
+
+        userNameTxtView.setText(GlobalVar.gName);
+        userContactTxtView.setText(GlobalVar.gMobile);
+        userEmailTxtView.setText(GlobalVar.gEmail);
 
         //sm=new SessionManager(this);
        // sm.checkLogin();
@@ -189,6 +204,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));

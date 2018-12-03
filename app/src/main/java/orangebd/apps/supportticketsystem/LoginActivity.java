@@ -451,6 +451,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             String Etype = object2.getString("user_type");
                             String Estatus = object2.getString("status");
 
+                            GlobalVar.gName=Ename;
+                            GlobalVar.gMobile=Emobile;
+                            GlobalVar.gEmail=Eemail;
+
                             model.setmUserId(Eid);
                             model.setmUserName(Ename);
                             model.setmUserEmail(Eemail);
