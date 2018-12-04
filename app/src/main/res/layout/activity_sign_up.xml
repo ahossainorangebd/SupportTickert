@@ -208,8 +208,9 @@
                     android:focusableInTouchMode="true"
                     android:textStyle="bold"
                     android:layout_marginBottom="5dp"
-                    />
-
+                    >
+                    <requestFocus/>
+                </Button>
 
             </LinearLayout>
         </ScrollView>

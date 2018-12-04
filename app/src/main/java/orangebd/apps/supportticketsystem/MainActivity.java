@@ -138,9 +138,12 @@ public class MainActivity extends AppCompatActivity
 
             statisticsBtnLayout.setVisibility(View.VISIBLE);
 
+            GlobalVar.gIsAdminForStatistics=true;
         }
-        else
+        else {
             statisticsBtnLayout.setVisibility(View.GONE);
+            GlobalVar.gIsAdminForStatistics=false;
+        }
 
         testButton3=findViewById(R.id.totalDoneTicketBtn3);
         testButton3.setOnClickListener(new View.OnClickListener() {
@@ -262,7 +265,6 @@ public class MainActivity extends AppCompatActivity
             sm.logoutUser();
 
             finish();
-
 
         }
 

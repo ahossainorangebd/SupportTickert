@@ -91,14 +91,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
-
-
-
     public static String ID;
     public static String TITLE;
     public static String TICKETsTATE;
-
-
 
     /**
      * this is a temporary code  -->
@@ -454,6 +449,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             GlobalVar.gName=Ename;
                             GlobalVar.gMobile=Emobile;
                             GlobalVar.gEmail=Eemail;
+                            GlobalVar.gUserType=Etype;
 
                             model.setmUserId(Eid);
                             model.setmUserName(Ename);

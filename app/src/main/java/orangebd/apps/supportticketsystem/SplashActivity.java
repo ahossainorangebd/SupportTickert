@@ -44,6 +44,8 @@ public class SplashActivity extends AppCompatActivity {
 
         context=this;
 
+        getSupportActionBar().hide();
+
         sm=new SessionManager(this);
 
         GlobalVar.gIsLogin= sm.checkLogin();
@@ -62,12 +64,8 @@ public class SplashActivity extends AppCompatActivity {
                 mStrpwd=strPwd;
 
                 new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/login.php");
-
         }
-
-
     }
-
 
     public class UploadUserInfo extends AsyncTask<String, Void, String> {
 

@@ -175,7 +175,6 @@
 
             <Button
                 android:id="@+id/regiPageSignUpId"
-                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -186,7 +185,14 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:focusableInTouchMode="true"
-                android:textStyle="bold" />
+                android:textStyle="bold" >
+
+                <requestFocus/>
+
+            </Button>
+
+
+
 
 
             <LinearLayout
@@ -233,8 +239,12 @@
                         android:background="#c1c1c1"
                         android:textColor="#000"
                         android:textStyle="bold"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:layout_marginLeft="5dp"
-                        android:text="রেজিস্ট্রেশন"/>
+                        android:text="রেজিস্ট্রেশন">
+                        <requestFocus/>
+                    </Button>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -242,11 +252,9 @@
                         android:layout_marginLeft="3dp"
                         android:text="করুন"/>
 
-
                 </LinearLayout>
 
             </LinearLayout>
-
 
         </LinearLayout>
     </ScrollView>

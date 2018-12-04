@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -107,6 +112,14 @@ public class AddTicketActivity extends AppCompatActivity {
 
     private Button loginForPwdMatched;
 
+
+    //Splash Activities
+    SessionManager sm;
+    private HashMap<String,String> splashMap;
+    private ArrayList<DetailDataModel> detailList;
+    private String mStrEmail;
+    private String mStrpwd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,28 +147,6 @@ public class AddTicketActivity extends AppCompatActivity {
 
         mEdtTxtSubject=findViewById(R.id.label3);
         mEdtTxtDetails=findViewById(R.id.textDetails);
-
-        loginForPwdMatched=findViewById(R.id.loginForPwdMatch);
-        loginForPwdMatched.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mStrSubject=mEdtTxtSubject.getText().toString();
-                mStrDetails=mEdtTxtDetails.getText().toString();
-
-                map = new HashMap<String, String>();
-
-                map.put("action","complete_adding");
-
-                map.put("user_subject",mStrSubject);
-                map.put("user_details",mStrDetails);
-
-                /*new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/userAddTicket.php");*/
-
-                Intent i = new Intent(context, MainActivity.class);
-                v.getContext().startActivity(i);
-            }
-        });
 
         /**
          *  <--  this is a temporary code
@@ -202,7 +193,27 @@ public class AddTicketActivity extends AppCompatActivity {
 
                 Toast.makeText(context,"Ticket added successfully", Toast.LENGTH_LONG).show();
 
+                mStrSubject=mEdtTxtSubject.getText().toString();
+                mStrDetails=mEdtTxtDetails.getText().toString();
+
+                map = new HashMap<String, String>();
+
+                map.put("action","complete_adding");
+
+                map.put("user_subject",mStrSubject);
+                map.put("user_details",mStrDetails);
+
+
+                /*new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/userAddTicket.php");*/
+
                 Intent i = new Intent(context, MainActivity.class);
+
+                if(GlobalVar.gIsAdminForStatistics==true){
+                    i.putExtra("isadmin", true);
+                }
+                else
+                    i.putExtra("isadmin", false);
+
                 v.getContext().startActivity(i);
             }
         });
@@ -223,6 +234,29 @@ public class AddTicketActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+
+        /*sm=new SessionManager(this);
+
+        GlobalVar.gIsLogin= sm.checkLogin();
+
+        if(GlobalVar.gIsLogin==true){
+            HashMap<String,String> hashMap=sm.getUserDetails();
+            String strEmail=hashMap.get("email");
+            String strPwd=hashMap.get("password");
+
+            splashMap = new HashMap<String, String>();
+
+            splashMap.put("user_email",strEmail);
+            splashMap.put("user_password",strPwd);
+
+            mStrEmail=strEmail;
+            mStrpwd=strPwd;
+
+            new SplashActivities().execute("http://114.130.54.74/otrs_monitoring/api/login.php");
+        }*/
+
+
     }
 
     private boolean mayRequestContacts() {
@@ -443,6 +477,146 @@ public class AddTicketActivity extends AppCompatActivity {
 
         return result.toString();
     }
+
+
+
+    /*public class SplashActivities extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String data= performPostCall(params[0],splashMap);
+
+            if (data != null) try {
+
+                JSONObject jsonObj = new JSONObject(data);
+                detailList=new ArrayList<DetailDataModel>();
+
+                DetailDataModel model = new DetailDataModel();
+
+                String login_success = jsonObj.getString("success");
+                model.setmSuccessId(login_success);
+
+                if(login_success.equalsIgnoreCase("1")) {
+
+                    try {
+                        for (int i=0;i<jsonObj.length()-1;i++)
+                        {
+                            JSONArray object = (JSONArray) jsonObj.get("data");
+                            JSONObject object2 = (JSONObject) object.get(0);
+
+                            int length=object.length();
+
+                            //Iterator<String> temp = object.keys();
+                            //while (temp.hasNext()) {
+
+                            //String dynamicKey = (String) temp.next();
+
+
+                            //for success login
+
+
+                            //for User data
+                            String Eid = object2.getString("id");
+                            String Ename = object2.getString("user_name");
+                            String Eemail = object2.getString("user_email");
+                            String Emobile = object2.getString("user_mobile");
+                            String Epassword = object2.getString("user_password");
+                            String Edomain = object2.getString("user_domain");
+                            String Etype = object2.getString("user_type");
+                            String Estatus = object2.getString("status");
+
+                            model.setmUserId(Eid);
+                            model.setmUserName(Ename);
+                            model.setmUserEmail(Eemail);
+                            model.setmUserMobile(Emobile);
+                            model.setmUserPasword(Epassword);
+                            model.setmUserDomain(Edomain);
+                            model.setmUserType(Etype);
+                            model.setmStatus(Estatus);
+
+                            detailList.add(model);
+                            publishProgress();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+
+            }
+            catch (final JSONException e) {
+                Log.e("tag", "Couldn't get json from server.");
+            }
+            else {
+                Log.e("tag", "Couldn't get json from server.");
+            }
+
+
+            // String returnData=data.toString();
+            if (data.equalsIgnoreCase("ok"))
+                return "success";
+            else
+                return "";
+
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(result);
+
+            GlobalVar.gArrayFromLoginPage=detailList;
+
+            //TODO
+            //progressDialog.dismiss();
+
+            if (detailList.size()>0) {
+
+                String mUserType= detailList.get(0).getmUserType();
+
+                if (mUserType.equalsIgnoreCase("1")){
+
+                    if(GlobalVar.gIsLogin==false) {
+
+                        sm = new SessionManager(context);
+                        sm.createLoginSession(mStrEmail, mStrpwd);
+
+                    }
+
+                    GlobalVar.gMapFromLoginActivity=splashMap;
+
+                    Intent i = new Intent(context, MainActivity.class);
+                    i.putExtra("EFloginActvt", mStrEmail);
+                    i.putExtra("isadmin", true);
+
+                    startActivity(i);
+                    finish();
+
+                }
+                else{
+                    Intent i = new Intent(context, MainActivity.class);
+                    i.putExtra("EFloginActvt", mStrEmail);
+                    i.putExtra("isadmin", false);
+
+                    startActivity(i);
+                    finish();
+                }
+
+                return;
+            }
+
+        }
+
+        @Override
+        protected void onCancelled() {
+            //mAuthTask = null;
+            //showProgress(false);
+        }
+
+    }*/
 
 
 
