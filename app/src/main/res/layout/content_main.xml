@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         >
 
         <RelativeLayout
@@ -19,7 +19,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:visibility="gone"
             >
 
             <LinearLayout
@@ -32,17 +31,18 @@
 
                 <LinearLayout
                     android:id="@+id/totalDoneTicketBtn1"
-                    android:layout_width="115dp"
+                    android:layout_width="112dp"
                     android:padding="5dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@drawable/gradient_background"
+                    android:background="#adadad"
                     >
 
                     <TextView
+                        android:id="@+id/totalTicketId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="২৩৪"
+                        android:text="Loading.."
                         android:layout_gravity="center"
                         android:textColor="#000"
                         android:textSize="20sp"
@@ -63,18 +63,19 @@
 
                 <LinearLayout
                     android:id="@+id/totalDoneTicketBtn2"
-                    android:layout_width="115dp"
+                    android:layout_width="112dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="5dp"
-                    android:background="@drawable/gradient_background"
+                    android:background="#adadad"
                     android:layout_marginLeft="7dp"
                     >
 
                     <TextView
+                        android:id="@+id/openTicketId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="৮৯"
+                        android:text="Loading.."
                         android:layout_gravity="center"
                         android:textColor="#000"
                         android:textSize="20sp"
@@ -95,18 +96,19 @@
 
                 <LinearLayout
                     android:id="@+id/totalDoneTicketBtn3"
-                    android:layout_width="115dp"
+                    android:layout_width="112dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@drawable/gradient_background"
+                    android:background="#adadad"
                     android:padding="5dp"
                     android:layout_marginLeft="7dp"
                     >
 
                     <TextView
+                        android:id="@+id/closedTicketId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="৭৬"
+                        android:text="Loading.."
                         android:layout_gravity="center"
                         android:textColor="#000"
                         android:textSize="20sp"
@@ -135,8 +137,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="3dp"
-            android:background="@drawable/gradient_background"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="#adadad"
             android:layout_below="@+id/statisticsBtnLayoutId"
             >
 
@@ -145,6 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:padding="2dp"
                 android:layout_marginLeft="10dp"
                 android:text="টিকেট নং"
                 android:textStyle="bold"
@@ -154,7 +158,7 @@
 
             <FrameLayout
                 android:layout_width="1dp"
-                android:layout_marginLeft="4.5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_height="match_parent"
                 android:background="#686868"
                 >
@@ -166,8 +170,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:layout_marginLeft="22dp"
+                android:layout_marginLeft="25dp"
                 android:text="বিষয়"
+                android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="#686868"
@@ -211,6 +216,7 @@
                 android:text="অবস্থা"
                 android:textStyle="bold"
                 android:textSize="16sp"
+                android:padding="2dp"
                 android:textColor="#686868"
                 />
 
@@ -222,24 +228,19 @@
             android:layout_height="wrap_content"
             android:background="#d6d6d6"
             android:layout_marginLeft="6dp"
-            android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
             android:layout_below="@+id/headOfTableId"
             >
 
-
-
-
-
-            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            <ScrollView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/my_recycler_view"
-                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="horizontal"

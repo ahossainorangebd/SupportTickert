@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -49,6 +50,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -112,13 +114,19 @@ public class AddTicketActivity extends AppCompatActivity {
 
     private Button loginForPwdMatched;
 
+    private String emailFromMainActvty;
+    private String mAttachment;
+    private String mExtension;
 
     //Splash Activities
     SessionManager sm;
     private HashMap<String,String> splashMap;
     private ArrayList<DetailDataModel> detailList;
+
     private String mStrEmail;
     private String mStrpwd;
+
+    private ImageView imageAttachPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,11 +148,13 @@ public class AddTicketActivity extends AppCompatActivity {
 
         this.imageView= this.findViewById(R.id.imagePictureId);
 
+        emailFromMainActvty = getIntent().getExtras().getString("EFmainActvt");
 
         /**
          *   this is a temporary code -->
          * */
 
+        imageAttachPicture=findViewById(R.id.imagePictureId);
         mEdtTxtSubject=findViewById(R.id.label3);
         mEdtTxtDetails=findViewById(R.id.textDetails);
 
@@ -195,16 +205,22 @@ public class AddTicketActivity extends AppCompatActivity {
 
                 mStrSubject=mEdtTxtSubject.getText().toString();
                 mStrDetails=mEdtTxtDetails.getText().toString();
+                mAttachment = processImage();
+                //mExtension = ".jpg";
 
                 map = new HashMap<String, String>();
 
-                map.put("action","complete_adding");
+              //  map.put("action","complete_adding");
 
-                map.put("user_subject",mStrSubject);
-                map.put("user_details",mStrDetails);
+                map.put("subject",mStrSubject);
+                map.put("description",mStrDetails);
+               // map.put("user_email",emailFromMainActvty);
+                map.put("user_email",GlobalVar.gEmailFromSplash);
+                map.put("attachment", mAttachment);
+               // map.put("ext", mExtension);
+                //map.put("attachment",mStrDetails);
 
-
-                /*new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/userAddTicket.php");*/
+                new AddNewTicket().execute("http://114.130.54.74/otrs_monitoring/api/addTicket.php");
 
                 Intent i = new Intent(context, MainActivity.class);
 
@@ -214,7 +230,11 @@ public class AddTicketActivity extends AppCompatActivity {
                 else
                     i.putExtra("isadmin", false);
 
+                deleteCache(context);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 v.getContext().startActivity(i);
+
+                finish();
             }
         });
 
@@ -291,6 +311,7 @@ public class AddTicketActivity extends AppCompatActivity {
             return true;
         }
         //else if (id==R.id.nav_share)
+        //else if (id==R.id.nav_share)
         //    shareIt();
         return super.onOptionsItemSelected(item);
     }
@@ -356,7 +377,7 @@ public class AddTicketActivity extends AppCompatActivity {
 
 
 
-    public class UploadUserInfo extends AsyncTask<String, Void, String> {
+    public class AddNewTicket extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -364,8 +385,8 @@ public class AddTicketActivity extends AppCompatActivity {
             String data= performPostCall(params[0],map);
 
             // String returnData=data.toString();
-            if (data.equalsIgnoreCase("ok"))
-                return "success";
+            if (data.equalsIgnoreCase("1"))
+                return "ok";
             else
                 return "";
         }
@@ -382,9 +403,9 @@ public class AddTicketActivity extends AppCompatActivity {
 
             String msg=result;
 
-            if (msg.equalsIgnoreCase("success")) {
+            if (msg.equalsIgnoreCase("ok")) {
 
-                Toast.makeText(getApplicationContext(),"User Information Uploaded Successfully", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Data Added Successfully", Toast.LENGTH_LONG).show();
                 /*
                 Intent i=new Intent(getApplicationContext(),thank_youActivity.class);
                 startActivity(i);
@@ -396,7 +417,7 @@ public class AddTicketActivity extends AppCompatActivity {
 
             else {
 
-                Toast.makeText(getApplicationContext(),"Failed to Upload User Information", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Failed to upload data", Toast.LENGTH_LONG).show();
                 /*
                 Intent i=new Intent(getApplicationContext(),paymentActivity.class);
                 startActivity(i);
@@ -617,6 +638,44 @@ public class AddTicketActivity extends AppCompatActivity {
         }
 
     }*/
+
+    public String processImage(){
+        imageAttachPicture.buildDrawingCache();
+        Bitmap bm1=imageAttachPicture.getDrawingCache();
+        //if (uploadImage !=null) {
+        //Bitmap bm = uploadImage;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm1.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+        byte[] b = baos.toByteArray();
+
+        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        //}
+        return encodedImage;
+    }
+
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {}
+    }
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
 
 
 

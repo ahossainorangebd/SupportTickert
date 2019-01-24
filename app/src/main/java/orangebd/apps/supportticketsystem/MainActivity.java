@@ -45,9 +45,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -73,8 +77,11 @@ public class MainActivity extends AppCompatActivity
     SessionManager sm;
 
     private HashMap<String, String> map2;
+    private HashMap<String, String> map3;
 
     private String emailFromLoginActvt;
+    private String nameFromLoginActvt;
+    private String contactFromLoginActvt;
 
     private boolean isAdminCheck;
 
@@ -85,6 +92,18 @@ public class MainActivity extends AppCompatActivity
     private TextView userNameTxtView;
     private TextView userEmailTxtView;
     private TextView userContactTxtView;
+
+
+
+    private TextView mOpenTicketBtnText;
+    private TextView mClosedTicketBtnText;
+    private TextView mTotalTicketBtnText;
+
+
+    //For the three button texts
+    private String mOpenT;
+    private String mClosedT;
+    private String mTotalT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -107,18 +126,26 @@ public class MainActivity extends AppCompatActivity
 
         isAdminCheck = getIntent().getExtras().getBoolean("isadmin");
 
-        View navView = LayoutInflater.from(context).inflate(R.layout.nav_header_main, null, false);
+//        View navView = LayoutInflater.from(context).inflate(R.layout.nav_header_main, null, false);
+        NavigationView nView= findViewById(R.id.nav_view);
+        View headerView = nView.getHeaderView(0);
 
-        userNameTxtView=navView.findViewById(R.id.userNameId);
-        userContactTxtView=navView.findViewById(R.id.textView);
-        userEmailTxtView=navView.findViewById(R.id.contactTextViewId);
-
-        userNameTxtView.setText(GlobalVar.gName);
-        userContactTxtView.setText(GlobalVar.gMobile);
-        userEmailTxtView.setText(GlobalVar.gEmail);
+        userNameTxtView=headerView.findViewById(R.id.userNameId);
+        userContactTxtView=headerView.findViewById(R.id.textView);
+        userEmailTxtView=headerView.findViewById(R.id.contactTextViewId);
 
         //sm=new SessionManager(this);
        // sm.checkLogin();
+
+        emailFromLoginActvt = getIntent().getExtras().getString("EFloginActvt");
+        nameFromLoginActvt = getIntent().getExtras().getString("NFloginActvt");
+        contactFromLoginActvt = getIntent().getExtras().getString("CFloginActvt");
+
+
+        userNameTxtView.setText(GlobalVar.gUserNameFromSplash);
+        userContactTxtView.setText(GlobalVar.gContactFromSplash);
+        userEmailTxtView.setText(GlobalVar.gEmailFromSplash);
+        //userEmailTxtView.setText(emailFromLoginActvt);
 
         android.support.design.widget.FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +153,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 
                 Intent i = new Intent(context, AddTicketActivity.class);
+                i.putExtra("EFmainActvt", emailFromLoginActvt);
                 view.getContext().startActivity(i);
             }
         });
@@ -145,32 +173,9 @@ public class MainActivity extends AppCompatActivity
             GlobalVar.gIsAdminForStatistics=false;
         }
 
-        testButton3=findViewById(R.id.totalDoneTicketBtn3);
-        testButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(MainActivity.this,"আপনার নিস্পন্ন টিকেট সংখ্যা ৭৬ টি",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        testButton2=findViewById(R.id.totalDoneTicketBtn2);
-        testButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(MainActivity.this,"আপনার চলমান টিকেট সংখ্যা ৮৯ টি",Toast.LENGTH_LONG).show();
-            }
-        });
-
         testButton1=findViewById(R.id.totalDoneTicketBtn1);
-        testButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(MainActivity.this,"আপনার মোট টিকেট সংখ্যা ২৩৪ টি",Toast.LENGTH_LONG).show();
-            }
-        });
+        testButton2=findViewById(R.id.totalDoneTicketBtn2);
+        testButton3=findViewById(R.id.totalDoneTicketBtn3);
 
         //FloatingActionButton actionC = new FloatingActionButton(getBaseContext());
 
@@ -208,13 +213,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-
-        emailFromLoginActvt = getIntent().getExtras().getString("EFloginActvt");
 
         mapFromLogin=GlobalVar.gMapFromLoginActivity;
         SessionManager sm=new SessionManager(context);
@@ -224,7 +224,16 @@ public class MainActivity extends AppCompatActivity
         map2 = new HashMap<String, String>();
         map2.put("user_email", emailFromLoginActvt);
 
-        new LoadUsersInfo().execute("http://114.130.54.74/otrs_monitoring/api/loadUserTickets.php");
+        if(GlobalVar.gIsAdminForStatistics==true){
+            new LoadStatisticsInfo().execute("http://114.130.54.74/otrs_monitoring/api/statistics.php");
+        }
+        else
+            new LoadUsersInfo().execute("http://114.130.54.74/otrs_monitoring/api/loadUserTickets.php");
+
+        mTotalTicketBtnText=findViewById(R.id.totalTicketId);
+        mOpenTicketBtnText=findViewById(R.id.openTicketId);
+        mClosedTicketBtnText=findViewById(R.id.closedTicketId);
+
 
     }
 
@@ -271,6 +280,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.addTicketId) {
 
             Intent i = new Intent(context, AddTicketActivity.class);
+            i.putExtra("EFmainActvt", emailFromLoginActvt);
             context.startActivity(i);
         }
         //else if (id==R.id.nav_share)
@@ -290,6 +300,7 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.addTicketId) {
 
             Intent i = new Intent(context, AddTicketActivity.class);
+            i.putExtra("EFmainActvt", emailFromLoginActvt);
             context.startActivity(i);
 
         }
@@ -313,6 +324,95 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public class LoadStatisticsInfo extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            map3= new HashMap<>();
+
+            String data= performPostCall(params[0],map3);
+
+            if (data != null) try {
+
+                JSONObject jsonObj = new JSONObject(data);
+                detailList=new ArrayList<DetailDataModel>();
+
+                DetailDataModel model = new DetailDataModel();
+
+                String openTicketNumber = jsonObj.getString("open");
+                String closedTicketNumber = jsonObj.getString("closed");
+                String totalTicketNumber = jsonObj.getString("total");
+                model.setmOpenTicketNumber(openTicketNumber);
+                model.setmClosedTicketNumber(closedTicketNumber);
+                model.setmTotalTicketNumber(totalTicketNumber);
+
+                detailList.add(model);
+
+            }
+            catch (final JSONException e) {
+                Log.e("tag", "Couldn't get json from server.");
+            }
+            else {
+                Log.e("tag", "Couldn't get json from server.");
+            }
+
+            // String returnData=data.toString();
+            if (data.equalsIgnoreCase("ok"))
+                return "success";
+            else
+                return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            mOpenT = convetEngToBn(detailList.get(0).getmOpenTicketNumber());
+            mClosedT = convetEngToBn(detailList.get(0).getmClosedTicketNumber());
+            mTotalT = convetEngToBn(detailList.get(0).getmTotalTicketNumber());
+
+
+            testButton1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Toast.makeText(MainActivity.this,"আপনার মোট টিকেট সংখ্যা " + mTotalT + " টি",Toast.LENGTH_LONG).show();
+                }
+            });
+
+            testButton2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Toast.makeText(MainActivity.this,"আপনার চলমান টিকেট সংখ্যা " + mOpenT + " টি",Toast.LENGTH_LONG).show();
+                }
+            });
+
+            testButton3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Toast.makeText(MainActivity.this, "আপনার নিস্পন্ন টিকেট সংখ্যা " + mClosedT + " টি" ,Toast.LENGTH_LONG).show();
+                }
+            });
+
+
+            mTotalTicketBtnText.setText(mTotalT);
+            mOpenTicketBtnText.setText(mOpenT);
+            mClosedTicketBtnText.setText(mClosedT);
+
+            new LoadUsersInfo().execute("http://114.130.54.74/otrs_monitoring/api/loadUserTickets.php");
+        }
+
+        @Override
+        protected void onCancelled() {
+            //mAuthTask = null;
+            //showProgress(false);
+        }
     }
 
     public class LoadUsersInfo extends AsyncTask<String, Void, String> {
@@ -451,5 +551,22 @@ public class MainActivity extends AppCompatActivity
         }
 
         return result.toString();
+    }
+
+
+    public String convetEngToBn(String num){
+
+        num = num.replace("0","০");
+        num = num.replace("1","১");
+        num = num.replace("2","২");
+        num = num.replace("3","৩");
+        num = num.replace("4","৪");
+        num = num.replace("5","৫");
+        num = num.replace("6","৬");
+        num = num.replace("7","৭");
+        num = num.replace("8","৮");
+        num = num.replace("9","৯");
+
+        return num;
     }
 }

@@ -195,4 +195,36 @@ public class DetailDataModel
     public void setmIncomingTime(String mIncomingTime) {
         this.mIncomingTime = mIncomingTime;
     }
+
+
+
+    //statistics model
+
+    private String mOpenTicketNumber;
+    private String mClosedTicketNumber;
+    private String mTotalTicketNumber;
+
+    public String getmOpenTicketNumber() {
+        return mOpenTicketNumber;
+    }
+
+    public void setmOpenTicketNumber(String mOpenTicketNumber) {
+        this.mOpenTicketNumber = mOpenTicketNumber;
+    }
+
+    public String getmClosedTicketNumber() {
+        return mClosedTicketNumber;
+    }
+
+    public void setmClosedTicketNumber(String mClosedTicketNumber) {
+        this.mClosedTicketNumber = mClosedTicketNumber;
+    }
+
+    public String getmTotalTicketNumber() {
+        return mTotalTicketNumber;
+    }
+
+    public void setmTotalTicketNumber(String mTotalTicketNumber) {
+        this.mTotalTicketNumber = mTotalTicketNumber;
+    }
 }

@@ -55,6 +55,8 @@ public class SplashActivity extends AppCompatActivity {
                 String strEmail=hashMap.get("email");
                 String strPwd=hashMap.get("password");
 
+                GlobalVar.gEmailFromSplash=strEmail;
+
                 map = new HashMap<String, String>();
 
                 map.put("user_email",strEmail);
@@ -163,6 +165,11 @@ public class SplashActivity extends AppCompatActivity {
             if (detailList.size()>0) {
 
                 String mUserType= detailList.get(0).getmUserType();
+                String mUserNameFromSplash= detailList.get(0).getmUserName();
+                String mContactFromSplash= detailList.get(0).getmUserMobile();
+
+                GlobalVar.gUserNameFromSplash=mUserNameFromSplash;
+                GlobalVar.gContactFromSplash=mContactFromSplash;
 
                 if (mUserType.equalsIgnoreCase("1")){
 

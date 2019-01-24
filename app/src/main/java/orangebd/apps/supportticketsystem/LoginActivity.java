@@ -125,13 +125,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         context=this;
 
+        getSupportActionBar().hide();
+
         //recyclerView=findViewById(R.id.my_recycler_view);
 
        // sm=new SessionManager(this);
 
-        isLogin=GlobalVar.gIsLogin;
+        //isLogin=GlobalVar.gIsLogin;
 
-        if(isLogin==true){
+        /*if(isLogin==true){
             HashMap<String,String> hashMap=sm.getUserDetails();
             String strEmail=hashMap.get("email");
             String strPwd=hashMap.get("password");
@@ -141,9 +143,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             map.put("user_email",strEmail);
             map.put("user_password",strPwd);
 
+            GlobalVar.gEmail=strEmail;
+
             new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/login.php");
             finish();
-        }
+        }*/
 
         /**
          * this is a temporary code -->
@@ -173,10 +177,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                  * Login URL for hitting
                  * */
                 new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/login.php");
-
-//                new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/getUserTickets.php");
-
-                //new UploadUserInfo().execute("http://114.130.54.74/otrs_monitoring/api/statistics.php");
 
                 /*if(mStrEmail.equals("admin")) {
 
@@ -249,7 +249,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
         */
-
 
 
         mLoginFormView = findViewById(R.id.login_form);
@@ -400,8 +399,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
-    public class UploadUserInfo extends AsyncTask<String, Void, String> {
-
+    public class UploadUserInfo extends AsyncTask<String, Void, String>
+    {
         @Override
         protected String doInBackground(String... params) {
 
@@ -432,9 +431,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                             //String dynamicKey = (String) temp.next();
 
-
                             //for success login
-
 
                             //for User data
                             String Eid = object2.getString("id");
@@ -478,10 +475,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         model.setmSuccessId(lSuccess);
                         model.setmDatas(lData);*/
 
-
-
                             //for Login success & data
-
 
                             detailList.add(model);
                             publishProgress();
@@ -524,6 +518,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (detailList.size()>0) {
 
                 String mUserType= detailList.get(0).getmUserType();
+                String mUserName= detailList.get(0).getmUserName();
+                String mUserContact= detailList.get(0).getmUserMobile();
 
                 if (mUserType.equalsIgnoreCase("1")){
 
@@ -538,6 +534,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     Intent i = new Intent(context, MainActivity.class);
                     i.putExtra("EFloginActvt", mStrEmail);
+                    i.putExtra("NFloginActvt", mUserName);
+                    i.putExtra("CFloginActvt", mUserContact);
                     i.putExtra("isadmin", true);
 
 
@@ -547,17 +545,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 else{
                     Intent i = new Intent(context, MainActivity.class);
                     i.putExtra("EFloginActvt", mStrEmail);
+                    i.putExtra("NFloginActvt", mUserName);
+                    i.putExtra("CFloginActvt", mUserContact);
                     i.putExtra("isadmin", false);
 
                     startActivity(i);
                 }
-
-
-
-
-
-
-
 
                 //TODO//
                 //  map.put("access_token","access");

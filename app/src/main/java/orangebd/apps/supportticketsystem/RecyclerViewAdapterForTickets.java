@@ -33,6 +33,8 @@ public class RecyclerViewAdapterForTickets extends RecyclerView.Adapter<Recycler
 
     //private String copyRightText;
     // private ImageView mainImage;
+
+    private String mStatus;
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewName;
@@ -63,8 +65,8 @@ public class RecyclerViewAdapterForTickets extends RecyclerView.Adapter<Recycler
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
                                            int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_layout, parent, false);
+       // View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
         //view.setOnClickListener(MainActivity.myOnClickListener);
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
@@ -82,10 +84,61 @@ public class RecyclerViewAdapterForTickets extends RecyclerView.Adapter<Recycler
         final String Details=dataSet.get(listPosition).getmTitle();
         final String Status=dataSet.get(listPosition).getmTicket_state_id();
 
-        textViewVersion.setText(Subject);
         textViewVersion.setText(Subjects);
         textViewVersion2.setText(Details);
-        textViewVersion3.setText(Status);
+
+
+        switch (Status)
+        {
+            case "1":
+                mStatus="New";
+
+                break;
+
+            case "2":
+                mStatus="Closed successful";
+
+                break;
+
+            case "3":
+                mStatus="closed unsuccessful";
+
+                break;
+
+            case "4":
+                mStatus="Open";
+
+                break;
+
+            case "5":
+                mStatus="Removed";
+
+                break;
+
+            case "6":
+                mStatus="Pending reminder";
+
+                break;
+
+            case "7":
+
+                mStatus="Pending auto close+";
+                break;
+
+            case "8":
+                mStatus="Pending auto close-";
+
+                break;
+
+            case "9":
+                mStatus="Merged";
+                break;
+
+        }
+
+        textViewVersion3.setText(mStatus);
+
+        //textViewVersion3.setText(Status);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +161,7 @@ public class RecyclerViewAdapterForTickets extends RecyclerView.Adapter<Recycler
     }
     private String convertEnglishDateToBengali(String englishDate) throws ParseException {
         // Initial date time in String forma†
+        //String timeOrg = "Mon Apr 18 22:56:10 GMT+05:30 2016";
         //String timeOrg = "Mon Apr 18 22:56:10 GMT+05:30 2016";
         String timeOrg = englishDate;
         // Corresponding date format

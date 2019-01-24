@@ -15,9 +15,11 @@ import android.widget.TextView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class RecyclerViewAdapterForDetailOfTickets extends RecyclerView.Adapter<RecyclerViewAdapterForDetailOfTickets.MyViewHolder>{
 
@@ -75,11 +77,27 @@ public class RecyclerViewAdapterForDetailOfTickets extends RecyclerView.Adapter<
         final String mBody=dataSet.get(listPosition).getmBody();
         final String mTime=dataSet.get(listPosition).getmIncomingTime();
 
+        long newFormatedTime=Long.parseLong(mTime);
+
+      //  String mDate=getDate(newFormatedTime, "dd/MM/yyyy");
+
+
+        Calendar cl = Calendar.getInstance();
+        //Convert time in seconds
+        cl.setTimeInMillis(newFormatedTime*1000L);
+        String date = "" + cl.get(Calendar.DAY_OF_MONTH) + "/" + cl.get(Calendar.MONTH) + "/" + cl.get(Calendar.YEAR);
+        String time = "" + cl.get(Calendar.HOUR_OF_DAY) + ":" + cl.get(Calendar.MINUTE) + ":" + cl.get(Calendar.SECOND);
+
+
+        /*String HourMintSeconds = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(newFormatedTime),
+                TimeUnit.MILLISECONDS.toMinutes(newFormatedTime) % TimeUnit.HOURS.toMinutes(1),
+                TimeUnit.MILLISECONDS.toSeconds(newFormatedTime) % TimeUnit.MINUTES.toSeconds(1));*/
+
         textViewVersion.setText(Subject);
         textViewVersion2.setText(mFrom);
         textViewVersion3.setText(mTo);
         textViewVersion4.setText(mBody);
-        textViewVersion5.setText(mTime);
+        textViewVersion5.setText(date +  " " + time);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +142,18 @@ public class RecyclerViewAdapterForDetailOfTickets extends RecyclerView.Adapter<
         String returnDate=sdfgmt.format(time);
         //System.out.println(sdfgmt.format(time));
         return returnDate;
+    }
+
+
+    public static String getDate(long milliSeconds, String dateFormat)
+    {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
 
     @Override
